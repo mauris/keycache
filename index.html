@@ -2,13 +2,15 @@
 <html>
   <head>
     <title>Hello World!</title>
-    <link href="bower_components/bootstrap/dist/css/boostrap.min.css" type="text/css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
   </head>
   <body>
     <div id="mainView">
 
     </div>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script>
+      var jQuery = require('./bower_components/jquery/dist/jquery.js');
+    </script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="index.js"></script>
   </body>
