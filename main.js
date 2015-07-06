@@ -125,13 +125,16 @@ app.on('ready', function() {
   });
 
   ipc.on('request-passwords', function(event){
-    
-  })
+    if (appData) {
+      event.sender.send('request-passwords-ready', appData);
+    }
+  });
 
   ipc.on('create-password', function(event, arg){
     var domain = arg.domain;
     createPassword(domain, 14, 26);
     writeCache(dataFile, cryptoService, appData);
+    event.sender.send('create-password-success', arg);
   });
 
 })();
