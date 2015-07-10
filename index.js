@@ -92,12 +92,23 @@ var mustache = require('mustache');
       return false;
     });
 
+    var addShowPassword = function(password, index, template) {
+      $("#mainView").append(mustache.render(template, {
+        password: password,
+        index: index
+      }));
+    }
+
     readCache(dataFile, cryptoService, function(err, data) {
       appData = data;
 
       var template = $("#passwordRowTemplate").html();
       mustache.parse(template);
-      $("#mainView").html(mustache.render(template, appData));
+      appData.passwords.forEach(function(password, index) {
+        addShowPassword(password, index, template);
+      });
+
+
     });
 
 
