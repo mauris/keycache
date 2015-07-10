@@ -1,6 +1,7 @@
 var ipc = require('ipc');
 var nodeCrypto = require('crypto');
 var fs = require('fs');
+var mustache = require('mustache');
 
 (function($){
   var createDefaultCache = function () {
@@ -94,7 +95,9 @@ var fs = require('fs');
     readCache(dataFile, cryptoService, function(err, data) {
       appData = data;
 
-      $("#mainView").append()
+      var template = $("#passwordRowTemplate").html();
+      mustache.parse(template);
+      $("#mainView").html(mustache.render(template, appData));
     });
 
 

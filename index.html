@@ -20,9 +20,25 @@
         </div>
       </div>
     </div>
-    <div id="mainView">
+    <div id="mainView" class="container">
 
     </div>
+    <script id="passwordRowTemplate" type="x-tmpl-mustache">
+      {{#passwords}}
+        <div class="row">
+          <div class="col-md-8">
+            <h4>{{domain}}</h4>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <a href="#" class="btn btn-default">Copy</a>
+              <a href="#" class="btn btn-default">Renew</a>
+              <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+        </div>
+      {{/passwords}}
+    </script>
     <script>
       var jQuery = require('./bower_components/jquery/dist/jquery.js');
     </script>
