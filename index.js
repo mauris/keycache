@@ -15,7 +15,6 @@ var mustache = require('mustache');
       var cipher = nodeCrypto.createCipher(algorithm, password);
       var crypted = cipher.update(text, 'utf8', 'base64');
       crypted += cipher.final('base64');
-      console.log(crypted);
       return crypted;
     };
     this.decrypt = function (crypted) {
@@ -87,16 +86,25 @@ var mustache = require('mustache');
 
     $("#btnAddPassword").click(function(){
       var domain = $("#txtDomainName").val().trim();
-      createPassword(domain, 14, 26);
-      writeCache(dataFile, cryptoService, appData);
+      if (domain) {
+        createPassword(domain, 14, 26);
+        writeCache(dataFile, cryptoService, appData);
+      }
       return false;
     });
 
-    var addShowPassword = function(password, index, template) {
-      $("#mainView").append(mustache.render(template, {
-        password: password,
-        index: index
-      }));
+    var addShowPassword = function(password, template) {
+      var $entry = $(mustache.render(template, password));
+      $entry.find('a.btn-delete').on('click', function() {
+        var $row = $(this).parent().parent().parent();
+        $row.remove();
+        var i = appData.passwords.indexOf(password);
+        if(i != -1) {
+        	appData.passwords.splice(i, 1);
+          writeCache(dataFile, cryptoService, appData);
+        }
+      });
+      $("#mainView").append($entry);
     }
 
     readCache(dataFile, cryptoService, function(err, data) {
@@ -104,14 +112,11 @@ var mustache = require('mustache');
 
       var template = $("#passwordRowTemplate").html();
       mustache.parse(template);
-      appData.passwords.forEach(function(password, index) {
-        addShowPassword(password, index, template);
+      appData.passwords.forEach(function(password) {
+        addShowPassword(password, template);
       });
 
-
     });
-
-
 
   });
 
